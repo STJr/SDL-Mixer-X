@@ -45,6 +45,7 @@ if(NOT EMSCRIPTEN
 
     option(SDL_MIXER_X_STATIC   "Build static library of SDL Mixer X" ${SDL_MIXER_X_STATIC_ENABLED_BY_DEFAULT})
     option(SDL_MIXER_X_SHARED   "Build shared library of SDL Mixer X" ${SDL_MIXER_X_SHARED_ENABLED_BY_DEFAULT})
+     option(SDL_MIXER_X_DISABLE_INSTALL   "Disable install of SDL Mixer X" OFF)
 else()
     set(SDL_MIXER_X_STATIC ON)
     set(SDL_MIXER_X_SHARED OFF)
@@ -330,6 +331,7 @@ list(APPEND SDLMixerX_SOURCES
 
 #file(GLOB SDLMixerX_SOURCES ${SDLMixerX_SOURCES})
 
+if(NOT SDL_MIXER_X_DISABLE_INSTALL)
 if(SDL_MIXER_X_STATIC AND NOT BUILD_AS_VB6_BINDING)
     add_library(SDL2_mixer_ext_Static STATIC ${SDLMixerX_SOURCES})
     if(CMAKE_STATIC_LIBRARY_PREFIX STREQUAL "" AND CMAKE_STATIC_LIBRARY_SUFFIX STREQUAL ".lib")
@@ -499,6 +501,7 @@ if(SDL_MIXER_X_SHARED AND NOT BUILD_AS_VB6_BINDING)
             FILE SDL2_mixer_ext-shared-targets.cmake
             NAMESPACE SDL2_mixer_ext::
             DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/SDL2_mixer_ext")
+endif()
 endif()
 
 
